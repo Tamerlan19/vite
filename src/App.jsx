@@ -1,62 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {data} from './Components/data.js'
-
+import { data } from './Components/data.js'
 
 export default function App() {
-  
   return (
-    <div>
-    <Header />
-    <main>
-      <div className='card'>
-          <table>
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Group</th>
-        </tr>
-        </thead>
-        <tbody>
-          {data.map((item, i) =>(
-            <Table key = {i} {...item} />
-          ))}
-        </tbody>
-      </table>
-      </div>
-    
-    </main>
+    <div className="app">
+      <main className="app__content">
+        <section className="card">
+          <Header />
+
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Group</th>
+                <th scope="col" aria-label="Actions" />
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <TableRow key={index} {...item} />
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
   )
 }
 
-
-function Header(){
-  return(
-    <div>
+function Header() {
+  return (
     <header className="header">
-      <div><h1>User List</h1></div>
-      <input type="text" name="" id="search" />
-      <button>Add</button>
+      <h1 className="header__title">User List</h1>
+      <div className="header__controls">
+        <input
+          className="header__search"
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search..."
+        />
+        <button className="header__button" type="button">
+          Add User
+        </button>
+      </div>
     </header>
-    </div>  
   )
-}  
+}
 
-function Table({name, email, group}){
-  return(
-    
-        <><tr>
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{group}</td>
-          </tr>
-        </>
-    
-
+function TableRow({ name, email, group }) {
+  return (
+    <tr className="user-table__row">
+      <td>{name}</td>
+      <td>{email}</td>
+      <td>{group}</td>
+      <td className="user-table__arrow" aria-hidden="true">
+        ›
+      </td>
+    </tr>
   )
-
 }
