@@ -18,7 +18,7 @@
   width: min(880px, 100%);
   background-color: #ffffff;
   border-radius: 16px;
-  padding: 32px;
+  padding: 15px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
 }
 
@@ -99,6 +99,7 @@
   letter-spacing: 0.05em;
   background-color: #f9fafb;
   padding: 14px 16px;
+  
 }
 
 .user-table tbody td {
@@ -136,4 +137,29 @@
   .header__search {
     flex: 1;
   }
+}
+.pagin{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid #f0f0f0;
+}
+
+.pagin__btn{
+  padding:8px 12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  background:#f8f8f8;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.pagin__page{
+  width: 30px;
+  height: 35px;
+  border-radius:8px;
+  border:2px solid #000000;
 }

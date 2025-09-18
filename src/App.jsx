@@ -11,18 +11,27 @@ export default function App() {
           <table className="user-table">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Group</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Почта</th>
+                <th scope="col">Отдел</th>
                 <th scope="col" aria-label="Actions" />
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => (
+              {data.slice(0,12).map((item, index) => (
                 <TableRow key={index} {...item} />
               ))}
             </tbody>
           </table>
+            <nav className='pagin'>
+              <button className='pagin__btn'>
+                ‹
+              </button>
+              <div className='pagin__page'><span></span></div>
+              <button className='pagin__btn'>
+                ›
+              </button>
+            </nav>          
         </section>
       </main>
     </div>
@@ -32,14 +41,14 @@ export default function App() {
 function Header() {
   return (
     <header className="header">
-      <h1 className="header__title">User List</h1>
+      <h1 className="header__title">Список работников</h1>
       <div className="header__controls">
         <input
           className="header__search"
           type="search"
           name="search"
           id="search"
-          placeholder="Search..."
+          placeholder="Поиск..."
         />
         <button className="header__button" type="button">
           Add User
