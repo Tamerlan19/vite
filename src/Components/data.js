@@ -1,0 +1,26 @@
+
+export const data = [
+    {name: 'Ivan0', email:'Ivan0@mail.ru', group: 'Finance'},
+    {name: 'Ivan1', email:'Ivan1@mail.ru', group: 'Engineering'},
+    {name: 'Ivan2', email:'Ivan2@mail.ru', group: 'Managment'},
+    {name: 'Ivan4', email:'Ivan3@mail.ru', group: 'HR'},
+    {name: 'Ivan4', email:'Ivan4@mail.ru', group: 'HR'},
+    {name: 'Ivan5', email:'Ivan5@mail.ru', group: 'Managment'},
+    {name: 'Ivan6', email:'Ivan6@mail.ru', group: 'HR'},
+    {name: 'Ivan7', email:'Ivan7@mail.ru', group: 'Engineering'},
+    {name: 'Ivan1', email:'Ivan1@mail.ru', group: 'Engineering'},
+    {name: 'Ivan2', email:'Ivan2@mail.ru', group: 'Managment'},
+    {name: 'Ivan4', email:'Ivan3@mail.ru', group: 'HR'},
+    {name: 'Ivan4', email:'Ivan4@mail.ru', group: 'HR'},
+    {name: 'Ivan5', email:'Ivan5@mail.ru', group: 'Managment'},
+    {name: 'Ivan6', email:'Ivan6@mail.ru', group: 'HR'},
+    {name: 'Ivan7', email:'Ivan7@mail.ru', group: 'Engineering'},
+    {name: 'Ivan1', email:'Ivan1@mail.ru', group: 'Engineering'},
+    {name: 'Ivan2', email:'Ivan2@mail.ru', group: 'Managment'},
+    {name: 'Ivan4', email:'Ivan3@mail.ru', group: 'HR'},
+    {name: 'Ivan4', email:'Ivan4@mail.ru', group: 'HR'},
+    {name: 'Ivan5', email:'Ivan5@mail.ru', group: 'Managment'},
+    {name: 'Ivan6', email:'Ivan6@mail.ru', group: 'HR'},
+    {name: 'Ivan7', email:'Ivan7@mail.ru', group: 'Engineering'},
+    
+]

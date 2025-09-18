@@ -1,0 +1,78 @@
+/* reset */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f6f7;
+  color: #333;
+  height: 100%;
+}
+
+/* контейнер */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* карточка */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 800px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* шапка */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 22px;
+  margin: 0;
+}
+.header input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.header button {
+  padding: 8px 14px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.header button:hover {
+  background-color: #eee;
+}
+
+/* таблица */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+}
+th {
+  background: #fafafa;
+  font-weight: 600;
+}
+tbody tr:hover {
+  background: #f9fafb;
+}
