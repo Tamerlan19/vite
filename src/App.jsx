@@ -70,3 +70,29 @@ function TableRow({ name, email, group }) {
     </tr>
   )
 }
+
+function userInfo ({name, email, group }){
+return(
+  <section className="content">
+    <h2>Информация о работнике</h2>
+    <div className="infoUser">
+
+    <div className='infoUser__name'>
+      <span>Имя:</span>
+      <span>{name}</span>
+      </div>
+
+    <div className='infoUser__mail'>
+      <span>Почта:</span>
+      <span>{email}</span>
+    </div>
+
+    <div className='infoUser__group'>
+      <span>Отдел:</span>
+      <span>{group}</span></div>
+    </div>
+
+    <button>Редактировать</button>
+  </section>
+)
+}
