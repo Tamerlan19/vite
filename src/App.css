@@ -43,7 +43,6 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
 .header__search {
@@ -336,6 +335,10 @@
 
   .header__title {
     font-size: 22px;
+  }
+
+  .header__controls {
+    flex-wrap: wrap;
   }
 
   .kv-grid {
