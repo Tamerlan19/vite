@@ -362,7 +362,7 @@
   }
 }
 
-/* ---- Details / Form card ---- */
+
 .content__title{
   margin: 12px 0 20px;
   text-align:center;
@@ -371,7 +371,7 @@
   color:#111827;
 }
 
-/* 2-колоночная сетка "лейбл → значение" */
+
 .kv-grid{
   max-width:640px;
   margin:0 auto;

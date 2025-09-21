@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backup:remote": "bash scripts/backup-remote.sh",
+    "backup:remote:pull": "DOWNLOAD=1 bash scripts/backup-remote.sh",
+    "restore:remote": "bash scripts/restore-remote.sh"
   },
   "dependencies": {
     "node": "^24.8.0",
