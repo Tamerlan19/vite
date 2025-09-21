@@ -44,7 +44,7 @@ export default function App() {
   )
 }
 
-/* --------------------- Список: серверные параметры --------------------- */
+
 function UsersList({ onSelect, onAdd }) {
   const [query, setQuery] = useState('')
   const [sortBy, setSortBy] = useState(null)   // 'name' | 'email' | 'group' | null
@@ -55,17 +55,17 @@ function UsersList({ onSelect, onAdd }) {
   const [viewRows, setViewRows] = useState([])
   const [totalPages, setTotalPages] = useState(1)
 
-  // дебаунс поиска
+
   const [debouncedQuery, setDebouncedQuery] = useState(query)
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(query), 300)
     return () => clearTimeout(t)
   }, [query])
-// допустимые ключи сортировки
+
 const validSort = new Set(['name','email','group'])
 const ensureSortKey = (k) => (validSort.has(k) ? k : null)
 
-// 1) Монтируемся → читаем параметры из URL в state
+
 useEffect(() => {
   const sp = new URLSearchParams(window.location.search)
   const q    = sp.get('q') || ''
@@ -77,10 +77,9 @@ useEffect(() => {
   setSortBy(sort)
   setSortDir(sort ? dir : 'asc')
   setPage(pg)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
-// 2) Любое изменение state → записываем обратно в URL
+
 useEffect(() => {
   const sp = new URLSearchParams()
   if (debouncedQuery) sp.set('q', debouncedQuery)
@@ -95,7 +94,7 @@ useEffect(() => {
   window.history.replaceState(null, '', next)
 }, [debouncedQuery, sortBy, sortDir, page])
 
-  // загрузка данных
+
   useEffect(() => {
     let cancelled = false
     async function load() {
@@ -203,7 +202,7 @@ function TableRow({ name, email, group, onClick }) {
   )
 }
 
-/* --------------------- Детали / Редактирование / Создание --------------------- */
+
 function UserDetails({ id, mode = 'view', onBack, onEdit, onSaved, onCancel }) {
   const [user, setUser] = useState(null)
   const [error, setError] = useState(null)
@@ -291,12 +290,18 @@ function CreateUser({ onCancel, onSaved }) {
   )
 }
 
-/* простая форма без украшательств */
-function EditForm({ initial, onSubmit, onCancel, title = 'Редактирование пользователя', saveLabel = 'Сохранить' }) {
+function EditForm({
+  initial,
+  onSubmit,
+  onCancel,
+  title = 'Редактирование пользователя',
+  saveLabel = 'Сохранить',
+}) {
   const [name, setName] = useState(initial.name || '')
   const [email, setEmail] = useState(initial.email || '')
   const [group, setGroup] = useState(initial.group || '')
   const [groups, setGroups] = useState([])
+
 
   useEffect(() => {
     let cancelled = false
@@ -308,21 +313,33 @@ function EditForm({ initial, onSubmit, onCancel, title = 'Редактирова
     return () => { cancelled = true }
   }, [])
 
+  // лёгкая валидация
+  const nameOk = name.trim().length > 0
+  const emailOk = email.trim().includes('@') && email.trim().length > 0
+  const isValid = nameOk && emailOk
+
+  const handleSave = () => {
+    if (!isValid) return
+    onSubmit({ name, email, group }) 
+  }
+
   return (
     <section className="content">
       <button type="button" onClick={onCancel}>← Назад</button>
       <h2>{title}</h2>
 
       <div className="infoUser">
-        <div className='infoUser__name'>
+        <div className="infoUser__name">
           <span>Имя:</span>
           <input value={name} onChange={e => setName(e.target.value)} />
         </div>
-        <div className='infoUser__mail'>
+
+        <div className="infoUser__mail">
           <span>Почта:</span>
           <input value={email} onChange={e => setEmail(e.target.value)} />
         </div>
-        <div className='infoUser__group'>
+
+        <div className="infoUser__group">
           <span>Отдел:</span>
           <select value={group} onChange={e => setGroup(e.target.value)}>
             <option value="">— без группы —</option>
@@ -333,8 +350,15 @@ function EditForm({ initial, onSubmit, onCancel, title = 'Редактирова
         </div>
       </div>
 
-      <div style={{ display:'flex', gap:8 }}>
-        <button type="button" onClick={() => onSubmit({ name, email, group })}>{saveLabel}</button>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={!isValid}
+          title={!isValid ? 'Введите имя и email с @' : undefined}
+        >
+          {saveLabel}
+        </button>
         <button type="button" onClick={onCancel}>Отмена</button>
       </div>
     </section>
@@ -342,7 +366,8 @@ function EditForm({ initial, onSubmit, onCancel, title = 'Редактирова
 }
 
 
-/* --------------------- Мини-роутер --------------------- */
+
+
 function usePath() {
   const isBrowser = typeof window !== 'undefined'
   const [path, setPath] = useState(() =>
