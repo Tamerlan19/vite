@@ -285,47 +285,73 @@ function UserDetails({ id, mode = 'view', onBack, onEdit, onSaved }) {
     }
   }
 
-  if (mode === 'edit') {
-    return (
-      <section className="content">
-        <button type="button" onClick={onBack}>← Назад</button>
-        <h2 className="content__title">Редактирование пользователя</h2>
+if (mode === 'edit') {
+  const invalidEmail = form.email.trim() === '' || !form.email.includes('@')
+  const showHint = form.email.trim() !== '' && !form.email.includes('@')
+  const isValid = form.name.trim().length > 0 && !invalidEmail
 
-        <form className="kv-grid" onSubmit={onSubmit}>
-          <label className="kv__label" htmlFor="ed-name">Имя</label>
-          <div className="kv__value">
-            <input id="ed-name" className="input"
-              value={form.name}
-              onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
-          </div>
-
-          <label className="kv__label" htmlFor="ed-email">Почта</label>
-          <div className="kv__value">
-            <input id="ed-email" className="input" type="email"
-              value={form.email}
-              onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
-          </div>
-
-          <label className="kv__label" htmlFor="ed-group">Отдел</label>
-          <div className="kv__value">
-            <select id="ed-group" className="select"
-              value={form.group}
-              onChange={e => setForm(f => ({ ...f, group: e.target.value }))}>
-              <option value="">— без группы —</option>
-              {groups.map(g => <option key={g} value={g}>{g}</option>)}
-            </select>
-          </div>
-
-          <div className="form-actions">
-            <button type="submit" className="btn btn--primary" disabled={!isValid || saving}>
-              {saving ? 'Сохранение…' : 'Сохранить'}
-            </button>
-            <button type="button" className="btn" onClick={onBack}>Отмена</button>
-          </div>
-        </form>
-      </section>
-    )
+  async function onSubmit(e){
+    e.preventDefault()
+    if (!isValid) return
+    setSaving(true)
+    try {
+      const u = await updateUser(id, {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        group: form.group || null
+      })
+      // обновим карточку сразу, чтобы изменения были видны без задержки
+      setUser(u)
+      setForm({ name: u.name, email: u.email, group: u.group || '' })
+      onSaved?.(u)  // навигация обратно на /users/:id (как и раньше)
+    } finally {
+      setSaving(false)
+    }
   }
+
+  return (
+    <section className="content">
+      <button type="button" onClick={onBack}>← Назад</button>
+      <h2 className="content__title">Редактирование пользователя</h2>
+
+      <form className="kv-grid" onSubmit={onSubmit}>
+        <label className="kv__label" htmlFor="ed-name">Имя</label>
+        <div className="kv__value">
+          <input id="ed-name" className="input"
+            value={form.name} onChange={e=>setForm(f=>({ ...f, name: e.target.value }))} />
+        </div>
+
+        <label className="kv__label" htmlFor="ed-email">Почта</label>
+        <div className="kv__value">
+          <input id="ed-email" className="input" type="email"
+            value={form.email}
+            onChange={e=>setForm(f=>({ ...f, email: e.target.value }))}
+            aria-invalid={invalidEmail ? 'true' : 'false'}
+            placeholder="name@mail.ru"
+          />
+          {showHint && <div className="field-hint">Формат: имя@домен</div>}
+        </div>
+
+        <label className="kv__label" htmlFor="ed-group">Отдел</label>
+        <div className="kv__value">
+          <select id="ed-group" className="select"
+            value={form.group} onChange={e=>setForm(f=>({ ...f, group: e.target.value }))}>
+            <option value="">— без группы —</option>
+            {groups.map(g => <option key={g} value={g}>{g}</option>)}
+          </select>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" className="btn btn--primary" disabled={!isValid || saving}>
+            {saving ? 'Сохранение…' : 'Сохранить'}
+          </button>
+          <button type="button" className="btn" onClick={onBack}>Отмена</button>
+        </div>
+      </form>
+    </section>
+  )
+}
+
 
   // VIEW режим
   return (
@@ -361,9 +387,12 @@ function CreateUser({ onCancel, onSaved }) {
   const [groups, setGroups] = useState([])
 
   useEffect(() => { listGroups().then(setGroups).catch(() => {}) }, [])
-  const valid = name.trim().length > 0 && email.includes('@')
 
-  async function onSubmit(e) {
+  const invalidEmail = email.trim() === '' || !email.includes('@')
+  const showHint = email.trim() !== '' && !email.includes('@')
+  const valid = name.trim().length > 0 && !invalidEmail
+
+  async function onSubmit(e){
     e.preventDefault()
     if (!valid) return
     const u = await createUser({ name: name.trim(), email: email.trim(), group: group || null })
@@ -378,17 +407,26 @@ function CreateUser({ onCancel, onSaved }) {
       <form className="kv-grid" onSubmit={onSubmit}>
         <label className="kv__label" htmlFor="cu-name">Имя</label>
         <div className="kv__value">
-          <input id="cu-name" className="input" value={name} onChange={e => setName(e.target.value)} />
+          <input id="cu-name" className="input" value={name} onChange={e=>setName(e.target.value)} />
         </div>
 
         <label className="kv__label" htmlFor="cu-email">Почта</label>
         <div className="kv__value">
-          <input id="cu-email" className="input" type="email" value={email} onChange={e => setEmail(e.target.value)} />
+          <input
+            id="cu-email"
+            className="input"
+            type="email"
+            value={email}
+            onChange={e=>setEmail(e.target.value)}
+            aria-invalid={invalidEmail ? 'true' : 'false'}
+            placeholder="name@mail.ru"
+          />
+          {showHint && <div className="field-hint">Формат: имя@домен</div>}
         </div>
 
         <label className="kv__label" htmlFor="cu-group">Отдел</label>
         <div className="kv__value">
-          <select id="cu-group" className="select" value={group} onChange={e => setGroup(e.target.value)}>
+          <select id="cu-group" className="select" value={group} onChange={e=>setGroup(e.target.value)}>
             <option value="">— без группы —</option>
             {groups.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
@@ -402,6 +440,7 @@ function CreateUser({ onCancel, onSaved }) {
     </section>
   )
 }
+
 
 /* --------------------- Мини-роутер --------------------- */
 function usePath() {

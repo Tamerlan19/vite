@@ -235,3 +235,17 @@
 .pagin, .pagin * { user-select: none; }
 .pagin { display:flex; justify-content:center; align-items:center; gap:12px; }
 .pagin__page { display:inline-flex; align-items:center; justify-content:center; min-width:64px; }
+
+
+.input--error{
+  border-color:#ef4444;
+  background:#fff5f5;
+}
+.input--error:focus{
+  outline-color:#fca5a5;
+}
+.field-error{
+  color:#b91c1c;
+  font-size:12px;
+  margin-top:4px;
+}
