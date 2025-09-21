@@ -1,12 +1,32 @@
-# React + Vite
+# Список работников — Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд для просмотра и управления списком работников.  
+Поиск, сортировка и пагинация выполняются **на сервере**. Валидация форм на фронте лёгкая (пустые поля/`@` в e-mail).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Что реализовано (по ТЗ)
 
-## Expanding the ESLint configuration
+- Список работников с **серверной** пагинацией, поиском и сортировкой.
+- Карточка работника (просмотр) + редактирование.
+- Создание нового работника.
+- Выпадающий список отделов (подтягивается с сервера `/groups`, есть пункт «— без группы —»).
+- Мини-роутинг без библиотек:
+  - `/` — список
+  - `/users/:id` — карточка
+  - `/users/:id/edit` — редактирование
+  - `/users/new` — создание
+- Синхронизация состояния списка с URL: `?q=&sort=&dir=&page=`.
+- Лёгкая защита от «мигания» при загрузке: фиксированная высота таблицы, overlay, кэш страниц и префетч следующей.
+- Адаптивная «карточная» вёрстка форм (как в макете).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Быстрый старт (Frontend)
+
+> Бэкенд уже развёрнут на VPS — укажи его адрес переменной `VITE_API`.
+
+1. Установи зависимости:
+   ```bash
+   cd frontend
+   npm i
