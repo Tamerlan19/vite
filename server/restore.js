@@ -1,3 +1,4 @@
+/* eslint-env node */
 import fs from 'fs/promises'
 import Database from 'better-sqlite3'
 const db = new Database('users.db')
