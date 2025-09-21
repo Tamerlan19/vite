@@ -111,10 +111,14 @@ export default function UsersList({ onSelect, onAdd }) {
           <tbody>
             {rows.length === 0 ? (
               <>
-                <tr><td colSpan={4}>Ничего не найдено</td></tr>
+                <tr className="user-table__row user-table__row--message">
+                  <td className="user-table__cell user-table__cell--message" colSpan={4}>
+                    Ничего не найдено
+                  </td>
+                </tr>
                 {Array.from({ length: Math.max(0, pageSize - 1) }).map((_, i) => (
                   <tr className="user-table__row user-table__row--empty" key={`empty-${i}`}>
-                    <td colSpan={4}>&nbsp;</td>
+                    <td className="user-table__cell user-table__cell--empty" colSpan={4}>&nbsp;</td>
                   </tr>
                 ))}
               </>
@@ -131,7 +135,7 @@ export default function UsersList({ onSelect, onAdd }) {
                 ))}
                 {Array.from({ length: Math.max(0, pageSize - rows.length) }).map((_, i) => (
                   <tr className="user-table__row user-table__row--empty" key={`pad-${i}`}>
-                    <td colSpan={4}>&nbsp;</td>
+                    <td className="user-table__cell user-table__cell--empty" colSpan={4}>&nbsp;</td>
                   </tr>
                 ))}
               </>
@@ -175,10 +179,10 @@ function Header({ query, onChangeQuery, onAdd }) {
 function TableRow({ name, email, group, onClick }) {
   return (
     <tr className="user-table__row" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <td>{name}</td>
-      <td>{email}</td>
-      <td>{group ?? '—'}</td>
-      <td className="user-table__arrow" aria-hidden="true">›</td>
+      <td className="user-table__cell" data-label="Имя">{name}</td>
+      <td className="user-table__cell" data-label="Почта">{email}</td>
+      <td className="user-table__cell user-table__cell--muted" data-label="Отдел">{group ?? '—'}</td>
+      <td className="user-table__cell user-table__arrow" data-label="" aria-hidden="true">›</td>
     </tr>
   )
 }
