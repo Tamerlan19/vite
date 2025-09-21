@@ -8,7 +8,6 @@ curl -s "$API/users?page=1&pageSize=3" | jq '{len: (.items|length), total, total
 echo -e "\nSearch (ivan)"
 curl -s "$API/users?page=1&pageSize=5&search=ivan" | jq '.items | map(.name)'
 
-# Создаём уникального пользователя
 EMAIL="test+smoke-$(date +%s)@example.com"
 NEW=$(curl -s -X POST "$API/users" -H 'Content-Type: application/json' \
   -d "{\"name\":\"Тест Тестов\",\"email\":\"$EMAIL\",\"group\":\"HR\"}")
@@ -26,4 +25,3 @@ curl -s -X PATCH "$API/users/$NEW_ID" -H 'Content-Type: application/json' \
 
 echo -e "\nGET /groups"
 curl -s "$API/groups" | jq
-

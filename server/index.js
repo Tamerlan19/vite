@@ -1,13 +1,12 @@
-// index.js
 import express from 'express'
 import cors from 'cors'
 import Database from 'better-sqlite3'
 
 const app = express()
-app.use(cors())            // CORS по умолчанию: *
-app.use(express.json())    // JSON body
+app.use(cors())            
+app.use(express.json())   
 
-// --- БД (SQLite) ---
+
 const db = new Database('users.db')
 db.pragma('journal_mode = WAL')
 db.exec(`
@@ -23,11 +22,11 @@ CREATE INDEX IF NOT EXISTS idx_users_email_ci ON users (lower(email));
 CREATE INDEX IF NOT EXISTS idx_users_group    ON users ("group");
 `)
 
-// --- Хелперы ---
+
 const SORT = { name: 'name', email: 'email', group: '"group"' }
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n))
 
-// --- Эндпоинты ---
+
 app.get('/users', (req, res) => {
   const page     = clamp(parseInt(req.query.page || '1', 10)  || 1, 1, 1_000_000)
   const pageSize = clamp(parseInt(req.query.pageSize || '12', 10) || 12, 1, 100)
@@ -51,7 +50,7 @@ app.get('/users', (req, res) => {
     FROM users
     ${where} ${orderSql}
     LIMIT ? OFFSET ?
-  `).all(...params, pageSize, (page - 1) * pageSize) // важно: * pageSize
+  `).all(...params, pageSize, (page - 1) * pageSize) 
 
   res.json({
     items,
@@ -63,6 +62,11 @@ app.get('/users', (req, res) => {
     sortDir: sortBy ? sortDir.toLowerCase() : 'asc',
     search,
   })
+})
+app.delete('/users/:id', (req, res) => {
+  const r = db.prepare('DELETE FROM users WHERE id = ?').run(req.params.id)
+  if (r.changes === 0) return res.status(404).json({ error: 'NOT_FOUND' })
+  res.status(204).end() 
 })
 
 app.get('/users/:id', (req, res) => {
@@ -115,9 +119,9 @@ app.get('/groups', (_req, res) => {
   res.json(rows.map(r => r.g))
 })
 
-// --- Запуск ---
+
 const PORT = process.env.PORT || 3001
-const HOST = process.env.HOST || '0.0.0.0' // слушаем извне; для локалки можно HOST=127.0.0.1
+const HOST = process.env.HOST || '0.0.0.0' 
 app.listen(PORT, HOST, () => {
   console.log(`API on http://${HOST}:${PORT}`)
 })
