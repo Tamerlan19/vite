@@ -175,10 +175,12 @@ function Header({ query, onChangeQuery, onAdd }) {
 function TableRow({ name, email, group, onClick }) {
   return (
     <tr className="user-table__row" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <td>{name}</td>
-      <td>{email}</td>
-      <td>{group ?? '—'}</td>
-      <td className="user-table__arrow" aria-hidden="true">›</td>
+      <td data-label="Имя">{name}</td>
+      <td data-label="Почта">{email}</td>
+      <td data-label="Отдел">{group ?? '—'}</td>
+      <td className="user-table__arrow" aria-hidden="true" data-label="">
+        <span>›</span>
+      </td>
     </tr>
   )
 }
