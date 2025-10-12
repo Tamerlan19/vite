@@ -239,6 +239,17 @@ project/
 ├─ .remote.env              # REMOTE_HOST/USER/... (не коммитить в публичный репо)
 └─ package.json
 ```
-
 ---
 
+
+---
+## 📸 Скриншоты
+
+![alt text](src/img/main_menu.png)
+
+![alt text](src/img/user_card.png)
+
+![alt text](src/img/fix_mode.png)
+
+![alt text](src/img/create_mode.png)
+---
